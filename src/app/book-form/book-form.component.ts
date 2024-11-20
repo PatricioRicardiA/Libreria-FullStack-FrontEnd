@@ -8,9 +8,11 @@ import {
 } from '@angular/forms';
 import { BookService } from '../Services/book.service';
 import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-book-form',
@@ -19,8 +21,10 @@ import { MessageService } from 'primeng/api';
     ReactiveFormsModule,
     FormsModule,
     ButtonModule,
-    ToastModule,
     RouterModule,
+    InputTextModule,
+    InputNumberModule,
+    CardModule,
   ],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss',
@@ -79,6 +83,7 @@ export class BookFormComponent {
       });
       return;
     }
+    this.isSaveInProgress = true;
     this.bookService.saveBook(this.formBook.value).subscribe({
       next: () => {
         this.messageService.add({
@@ -86,9 +91,11 @@ export class BookFormComponent {
           summary: 'Guardado',
           detail: 'Se creo libro correctamente',
         });
+        this.isSaveInProgress = false;
         this.router.navigateByUrl('/');
       },
       error: () => {
+        this.isSaveInProgress = false;
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -105,7 +112,9 @@ export class BookFormComponent {
         summary: 'Success',
         detail: 'Message Content',
       });
+      return;
     }
+    this.isSaveInProgress = true;
     this.bookService.updateBook(this.formBook.value).subscribe({
       next: () => {
         this.messageService.add({
@@ -113,6 +122,7 @@ export class BookFormComponent {
           summary: 'Actualizado',
           detail: 'Se actualizo el libro correctamente',
         });
+        this.isSaveInProgress = false;
         this.router.navigateByUrl('/');
       },
       error: () => {
@@ -121,6 +131,7 @@ export class BookFormComponent {
           summary: 'Error',
           detail: 'No se pudo crear el libro',
         });
+        this.isSaveInProgress = false;
         this.router.navigateByUrl('/');
       },
     });

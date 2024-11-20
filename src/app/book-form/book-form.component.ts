@@ -126,12 +126,12 @@ export class BookFormComponent {
         this.router.navigateByUrl('/');
       },
       error: () => {
+        this.isSaveInProgress = false;
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: 'No se pudo crear el libro',
         });
-        this.isSaveInProgress = false;
         this.router.navigateByUrl('/');
       },
     });

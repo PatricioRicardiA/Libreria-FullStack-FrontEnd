@@ -5,11 +5,19 @@ import { Book } from '../Models/book';
 import { BookService } from '../Services/book.service';
 import { RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ToolbarModule } from 'primeng/toolbar';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonModule, CardModule, RouterModule],
+  imports: [
+    ButtonModule,
+    CardModule,
+    RouterModule,
+    ToolbarModule,
+    AvatarModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

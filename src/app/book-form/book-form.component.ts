@@ -42,7 +42,7 @@ export class BookFormComponent {
     private router: Router
   ) {
     this.formBook = this.fb.group({
-      id: [null],
+      id: [0],
       title: ['', Validators.required],
       author: ['', Validators.required],
       pages: [1, [Validators.required, Validators.min(1)]],

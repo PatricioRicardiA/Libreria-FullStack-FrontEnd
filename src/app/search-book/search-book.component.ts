@@ -8,9 +8,10 @@ import { MessageService } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-search-book',
   standalone: true,
   imports: [
     ButtonModule,
@@ -19,52 +20,32 @@ import { InputTextModule } from 'primeng/inputtext';
     ToolbarModule,
     AvatarModule,
     InputTextModule,
+    FormsModule,
   ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  templateUrl: './search-book.component.html',
+  styleUrl: './search-book.component.scss',
 })
-export class HomeComponent {
+export class SearchBookComponent {
   books: Book[] = [];
-  isDeleteInProgress: boolean = false;
+  searchTerm: string = '';
   constructor(
     private bookService: BookService,
     private messageService: MessageService
   ) {}
-
   ngOnInit(): void {
     this.getAllBooks();
+  }
+  filteredBooks: Array<Book> = [];
+
+  onSearchChange(searchValue: string): void {
+    this.filteredBooks = this.books.filter((book) =>
+      book.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
   }
 
   getAllBooks() {
     this.bookService.getBooks().subscribe((data) => {
       this.books = data;
-    });
-  }
-
-  getBooksByTitle(title: string) {
-    this.bookService.getBooksByTitle(title).subscribe();
-  }
-
-  deleteBook(id: number) {
-    this.isDeleteInProgress = true;
-    this.bookService.deleteBook(id).subscribe({
-      next: () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Correcto',
-          detail: 'Libro eliminado',
-        });
-        this.isDeleteInProgress = false;
-        this.getAllBooks();
-      },
-      error: () => {
-        this.isDeleteInProgress = false;
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'No se pudo eliminar el libro',
-        });
-      },
     });
   }
 }

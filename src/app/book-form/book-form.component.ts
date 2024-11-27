@@ -13,6 +13,8 @@ import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CardModule } from 'primeng/card';
+import { ToolbarModule } from 'primeng/toolbar';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-book-form',
@@ -25,6 +27,8 @@ import { CardModule } from 'primeng/card';
     InputTextModule,
     InputNumberModule,
     CardModule,
+    ToolbarModule,
+    AvatarModule,
   ],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss',

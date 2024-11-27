@@ -30,4 +30,8 @@ export class BookService {
   deleteBook(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  getBooksByTitle(title: string) {
+    return this.http.get(`${this.apiUrl}/${title}`);
+  }
 }

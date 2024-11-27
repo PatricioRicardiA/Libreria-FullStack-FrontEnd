@@ -1,3 +1,37 @@
+<p-toolbar 
+      styleClass="bg-gray-900 shadow-2" 
+      [style]="{ 'border-radius': '3rem', 'background-image': 'linear-gradient(to right, var(--blue-500), var(--orange-800))' }">
+      <ng-template pTemplate="start">
+          <img src="asset/lol.webp" class="w-5rem h-5rem"/>
+          <p class="ml-2 border-round-right font-bold p-3 flex align-items-center justify-content-center">
+            CANARDI
+          </p>
+      </ng-template>
+      <ng-template pTemplate="center">
+          <div class="flex flex-wrap align-items-center gap-3">
+              <button routerLink="book-form/new" class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200">
+                  <i class="pi pi-arrow-left text-2xl"></i>
+              </button>
+              <button class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200">
+                  <i class="pi pi-book text-2xl"></i>
+              </button>
+              <button class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200">
+                  <i class="pi pi-search text-2xl"></i>
+              </button>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="end">
+          <div class="flex align-items-center gap-2">
+              <p-avatar 
+                  image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" 
+                  shape="circle" />
+              <span class="font-bold text-bluegray-50">
+                  Patricio Ricardi
+              </span>
+          </div>
+      </ng-template>
+  </p-toolbar>
+
 <div class="flex justify-content-center align-items-center min-h-screen w-full">
     <p-card header="Formulario libro" class="w-10">
         <form [formGroup]="formBook" (ngSubmit)= "edit?updateBook():saveBook()" class="flex flex-column gap-1 gap-2">

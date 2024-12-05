@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ import { AvatarModule } from 'primeng/avatar';
     RouterModule,
     ToolbarModule,
     AvatarModule,
+    InputTextModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -37,6 +39,10 @@ export class HomeComponent {
     this.bookService.getBooks().subscribe((data) => {
       this.books = data;
     });
+  }
+
+  getBooksByTitle(title: string) {
+    this.bookService.getBooksByTitle(title).subscribe();
   }
 
   deleteBook(id: number) {

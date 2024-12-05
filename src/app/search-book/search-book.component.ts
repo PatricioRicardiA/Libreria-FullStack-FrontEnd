@@ -1,51 +1,58 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { Book } from '../Models/book';
 import { BookService } from '../Services/book.service';
 import { RouterModule } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
-
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 @Component({
   selector: 'app-search-book',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
+    FormsModule,
     ButtonModule,
-    CardModule,
     RouterModule,
+    InputTextModule,
+    CardModule,
     ToolbarModule,
     AvatarModule,
-    InputTextModule,
-    FormsModule,
   ],
   templateUrl: './search-book.component.html',
   styleUrl: './search-book.component.scss',
 })
-export class SearchBookComponent {
+export class SearchBookComponent implements OnInit {
+  searchValue = '';
   books: Book[] = [];
-  searchTerm: string = '';
-  constructor(
-    private bookService: BookService,
-    private messageService: MessageService
-  ) {}
-  ngOnInit(): void {
-    this.getAllBooks();
-  }
-  filteredBooks: Array<Book> = [];
+  searchForm!: FormGroup;
 
-  onSearchChange(searchValue: string): void {
-    this.filteredBooks = this.books.filter((book) =>
-      book.title.toLowerCase().includes(searchValue.toLowerCase())
-    );
-  }
-
-  getAllBooks() {
-    this.bookService.getBooks().subscribe((data) => {
-      this.books = data;
+  constructor(private bookService: BookService, private fb: FormBuilder) {
+    this.searchForm = this.fb.group({
+      searchValue: '',
     });
+  }
+
+  ngOnInit(): void {
+    this.fetchData();
+  }
+  fetchData() {
+    this.bookService
+      .getBooksByTitle(this.searchValue)
+      .subscribe((bookSearch) => {
+        this.books = bookSearch;
+      });
+  }
+  onSearchSubmit(): void {
+    this.searchValue = this.searchForm.value.searchValue ?? '';
+    this.fetchData();
   }
 }
